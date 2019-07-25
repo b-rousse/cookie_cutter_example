@@ -6,6 +6,7 @@ Contains a molecule class
 
 import numpy as np
 
+
 def calculate_distance(rA, rB):
     """Calculate the distance between points A and B.
     
@@ -26,9 +27,10 @@ def calculate_distance(rA, rB):
     >>> calculate_distance(np.array([0, 0, 0], [0, 0.1, 0]))
     0.1
     """
-    dist_vec = (rA-rB)
+    dist_vec = (rA - rB)
     distance = np.linalg.norm(dist_vec)
     return distance
+
 
 def calculate_angle(rA, rB, rC, degrees=False):
     """Calculate angle between points A, B, and C
@@ -49,13 +51,14 @@ def calculate_angle(rA, rB, rC, degrees=False):
     """
     AB = rB - rA
     BC = rB - rC
-    
-    theta = np.arccos(np.dot(AB, BC) / (np.linalg.norm(AB)*np.linalg.norm(BC)))
-    
-    if degrees: 
+
+    theta = np.arccos(np.dot(AB, BC) / (np.linalg.norm(AB) * np.linalg.norm(BC)))
+
+    if degrees:
         return np.degrees(theta)
     else:
         return theta
+
 
 class Molecule:
     def __init__(self, name, symbols, coordinates):
@@ -63,25 +66,24 @@ class Molecule:
             self.name = name
         else:
             raise TypeError("Name is not a string.")
-        
+
         self.symbols = symbols
         self._coordinates = coordinates
         self.bonds = self.build_bond_list()
-    
+
     @property
     def num_atoms(self):
         return len(self.coordinates)
-    
+
     @property
     def coordinates(self):
-        return self._coordinates #please don't directly change coordinates
-    
-    @coordinates.setter#NOTE: 'coordinates.setter' is a crucial naming. If my function was boop, I'd have to use the boop.setter decorator
-    def coordinates(self, new_coordinates):
-        self._coordinates = new_coordinates #instead, use this to change coordinates.
-        self.bonds = self.build_bond_list()#if coordinates change, recheck bonding
+        return self._coordinates  #please don't directly change coordinates
 
-    
+    @coordinates.setter  #NOTE: 'coordinates.setter' is a crucial naming. If my function was boop, I'd have to use the boop.setter decorator
+    def coordinates(self, new_coordinates):
+        self._coordinates = new_coordinates  #instead, use this to change coordinates.
+        self.bonds = self.build_bond_list()  #if coordinates change, recheck bonding
+
     def build_bond_list(self, max_bond=2.93, min_bond=0):
         """
         Build a list of bonds based on a distance criteria.
@@ -95,24 +97,24 @@ class Molecule:
         bond_list : list
             List of bonded atoms. Returned as list of tuples where the values are the atom indices.
         """
-        
+
         bonds = {}
-        
+
         for atom1 in range(self.num_atoms):
             for atom2 in range(atom1, self.num_atoms):
                 distance = calculate_distance(self.coordinates[atom1], self.coordinates[atom2])
-                
+
                 if distance > min_bond and distance < max_bond:
                     bonds[(atom1, atom2)] = distance
-        
+
         return bonds
-    
+
 
 if __name__ == "__main__":
     # Do something if this file is invoked on its own
-    random_coordinates = np.random.random([3,3])
+    random_coordinates = np.random.random([3, 3])
     name = 'molecule'
-    symbols = ['H','O','H']
+    symbols = ['H', 'O', 'H']
 
     my_molecule = Molecule(name, symbols, random_coordinates)
 
@@ -121,7 +123,9 @@ if __name__ == "__main__":
 
     #random_coordinates = np.random.random([3,3])
     random_coordinates[0] += 100
-    my_molecule.coordinates = random_coordinates #what's actually happening is pythonis using the coordinates.setter decorator to change coordinates
-    print(F'\nThere are {len(my_molecule.bonds)} bonds, and we didnt call updatebondlist, it was in the _coordinates.setter wrapper')
+    my_molecule.coordinates = random_coordinates  #what's actually happening is pythonis using the coordinates.setter decorator to change coordinates
+    print(
+        F'\nThere are {len(my_molecule.bonds)} bonds, and we didnt call updatebondlist, it was in the _coordinates.setter wrapper'
+    )
     print(F'The coords are {my_molecule.coordinates}')
     pass
