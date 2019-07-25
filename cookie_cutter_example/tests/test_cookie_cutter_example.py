@@ -4,6 +4,7 @@ Unit and regression test for the cookie_cutter_example package.
 
 # Import package, test suite, and other packages as needed
 import cookie_cutter_example
+import unittest
 import pytest
 import sys
 import numpy as np
@@ -49,5 +50,4 @@ def test_calculate_angle_60():
 
     expected_angle = 60
 
-    assert expected_angle == calculated_angle
-
+    assert np.isclose(expected_angle, calculated_angle, rtol = 1e-9)
