@@ -80,7 +80,7 @@ class Molecule:
         return self._coordinates  #please don't directly change coordinates
 
     @coordinates.setter  #NOTE: 'coordinates.setter' is a crucial naming. If my function was boop, I'd have to use the boop.setter decorator
-    def coordinates(self, new_coordinates):
+    def coordinates(self, new_coordinates):#NOTE: I could use a different name for this function and the code wouldn't break: it doesn't have to be named the same as it is in property. THAT SAID, then I'd have to use the getter molecule.coordinates and the setter molecule.whateverInameit = []. This would be a mess.
         self._coordinates = new_coordinates  #instead, use this to change coordinates.
         self.bonds = self.build_bond_list()  #if coordinates change, recheck bonding
 
