@@ -28,12 +28,26 @@ def test_calculate_distance():
 def test_calculate_angle():
     '''test the calculate_angle function'''
 
-    r1 = np.array([0,0,0])
-    r2 = np.array([1,0,0])
-    r3 = np.array([2,0,0])
+    r1 = np.array([1,0,0])
+    r2 = np.array([0,0,0])
+    r3 = np.array([0,1,0])
     
-    calculated_angle = cookie_cutter_example.calculate_angle(r1, r2, r3)# % (2*np.pi)
+    calculated_angle = cookie_cutter_example.calculate_angle(r1, r2, r3, degrees = True)
 
-    expected_angle = np.pi
+    expected_angle = 90
 
     assert expected_angle == calculated_angle
+
+def test_calculate_angle_60():
+    '''tests another value of the calculate_angle function'''
+
+    r1 = np.array([0,0,-1])
+    r2 = np.array([0,1,0])
+    r3 = np.array([1,0,0])
+
+    calculated_angle = cookie_cutter_example.calculate_angle(r1, r2, r3, degrees = True)
+
+    expected_angle = 60
+
+    assert expected_angle == calculated_angle
+
