@@ -23,6 +23,7 @@ A link to `Google <www.google.com>`_.
    :caption: Contents:
 
    mysecondpage
+   api
 
 Indices and tables
 ==================
